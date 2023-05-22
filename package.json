@@ -1,0 +1,20 @@
+{
+	"name": "discordjs-minesweeper",
+	"private": true,
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon --watch src --watch .env --exec node src/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"discord.js": "^14.11.0",
+		"dotenv": "^16.0.3"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.22"
+	}
+}
