@@ -1,2 +1,4 @@
 node_modules
 .env
+commands_cache.json
+src/commands/guild_channel_mapping.json

@@ -1,50 +1,18 @@
-const { Client, Events, GatewayIntentBits } = require('discord.js');
-const { registerSlashCommands } = require('./registerCommands.js');
-require('dotenv').config();
+import 'dotenv/config';
+import mongoose from 'mongoose';
+import { registerSlashCommands } from './discord/registerCommands.js';
+import { getClient } from './discord/client.js';
 
 (async () => {
 	try {
-		const { CLIENT_ID, TOKEN } = process.env;
-		if (!CLIENT_ID || !TOKEN) {
-			throw new Error(
-				'Missing CLIENT_ID or TOKEN environment variable. Please ensure that both variables are set.'
-			);
+		const { CLIENT_ID, TOKEN, DATABASE_URI } = process.env;
+		if (!CLIENT_ID || !TOKEN || !DATABASE_URI) {
+			throw new Error('One of environment variables is missing. Please ensure that both variables are set.');
 		}
+		await mongoose.connect(DATABASE_URI);
+
 		const commandsCollection = await registerSlashCommands(CLIENT_ID, TOKEN);
-
-		const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-		client.commands = commandsCollection;
-
-		client.once(Events.ClientReady, (client) => {
-			console.log(`Ready! Logged in as ${client.user.tag}`);
-		});
-		client.on(Events.InteractionCreate, async (interaction) => {
-			try {
-				if (!interaction.isChatInputCommand()) {
-					return;
-				}
-				const command = interaction.client.commands.get(
-					interaction.commandName
-				);
-				if (!command) {
-					return;
-				}
-				await command.execute(interaction);
-			} catch (error) {
-				console.error(error);
-				if (interaction.replied || interaction.deferred) {
-					await interaction.followUp({
-						content: 'There was an error while executing this command!',
-						ephemeral: true,
-					});
-				} else {
-					await interaction.reply({
-						content: 'There was an error while executing this command!',
-						ephemeral: true,
-					});
-				}
-			}
-		});
+		const client = getClient(commandsCollection);
 
 		client.login(TOKEN);
 	} catch (error) {
