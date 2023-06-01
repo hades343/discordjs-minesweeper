@@ -39,16 +39,16 @@ export const command = {
 		)
 		.addStringOption((option) => option.setName('seed').setDescription('Tworzy gre z wskazanym seedem')),
 	async execute(interaction) {
-		const rows = interaction.options.getInteger('rows') ?? MAX_ROWS;
-		const cols = interaction.options.getInteger('cols') ?? MAX_COLS;
-		const bombs = interaction.options.getInteger('bombs') ?? DEFAULT_BOMBS;
+		const rows = interaction.options.getInteger('rows') ?? +MAX_ROWS;
+		const cols = interaction.options.getInteger('cols') ?? +MAX_COLS;
+		const bombs = interaction.options.getInteger('bombs') ?? +DEFAULT_BOMBS;
 		const challenge = interaction.options.getMentionable('challenge');
 		const seed = interaction.options.getString('seed');
 		// prettier-ignore
 		const isRanked =
-			rows === MAX_ROWS
-			&& cols === MAX_COLS
-			&& bombs === DEFAULT_BOMBS
+			rows == MAX_ROWS
+			&& cols == MAX_COLS
+			&& bombs == DEFAULT_BOMBS
 			&& seed === null
 			&& challenge === null;
 
