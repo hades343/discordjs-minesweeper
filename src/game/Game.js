@@ -277,7 +277,7 @@ class Game {
 		};
 	}
 
-	getBaseEmbed(member, challenge) {
+	getBaseEmbed(member, challenge, timestamp) {
 		const { hidden, marked, grid } = this.getEmbedData();
 
 		const embed = {
@@ -299,7 +299,7 @@ class Game {
 					)
 					.setTitle(`Saper ${this.rows}x${this.cols}${this.isRanked ? ` RANKED` : ''}`)
 					.setDescription(grid)
-					.setTimestamp()
+					.setTimestamp(timestamp)
 					.setFooter({ text: `Bomby: ${this.bombs} • Seed: ${this.seed}` })
 					.setFields(
 						{ name: `${EMOJIS.FLAG} Flagi`, value: `${marked} / ${this.bombs}`, inline: true },
@@ -366,7 +366,8 @@ async function handleGameInteraction(interaction) {
 
 	const baseEmbed = game.getBaseEmbed(
 		challenger ? challenger : interaction.member,
-		challenger ? interaction.member : challenger
+		challenger ? interaction.member : challenger,
+		new Date(gameData.timestamp)
 	);
 
 	if (game.state !== GAME_STATES.ACTIVE) {
