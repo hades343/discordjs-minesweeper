@@ -2,12 +2,16 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import { registerSlashCommands } from './discord/registerCommands.js';
 import { getClient } from './discord/client.js';
+import { checkKeys } from './utils/checkKeys.js';
+import { CLIENT_ID, TOKEN, DATABASE_URI, SEED_SECRET, REQUIRED_ENV_VARIABLES } from './constants.js';
 
 (async () => {
 	try {
-		const { CLIENT_ID, TOKEN, DATABASE_URI } = process.env;
-		if (!CLIENT_ID || !TOKEN || !DATABASE_URI) {
-			throw new Error('One of environment variables is missing. Please ensure that both variables are set.');
+		const missingEnvVariables = checkKeys(process.env, REQUIRED_ENV_VARIABLES);
+		if (missingEnvVariables.length !== 0) {
+			const misssingVariablesString = missingEnvVariables.join(', ');
+			const errorMessage = `The following environment variables are missing: ${misssingVariablesString}. Please ensure that these variables are properly set.`;
+			throw new Error(errorMessage);
 		}
 		await mongoose.connect(DATABASE_URI);
 

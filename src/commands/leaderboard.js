@@ -2,14 +2,16 @@ import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { User } from '../models/User.js';
 
 export const command = {
-	data: new SlashCommandBuilder().setName('leaderboard').setDescription('View the top 10 users on the leaderboard'),
+	data: new SlashCommandBuilder()
+		.setName('leaderboard')
+		.setDescription('Wyświetla liste top 10 graczy sapera na serwerze'),
 	async execute(interaction) {
 		const users = await User.find({ guild_id: interaction.guildId });
 		const topUsers = users.sort((a, b) => b.score - a.score).slice(0, 10);
 
 		if (users.length === 0) {
 			return interaction.reply({
-				content: `There is no user data available for your guild.`,
+				content: `Brak danych dla twojego serwera`,
 				ephemeral: true,
 			});
 		}

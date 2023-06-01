@@ -1,4 +1,4 @@
-import { EMOJIS } from '../emojis.js';
+import { EMOJIS } from '../../constants.js';
 
 function parseInteraction({ user, message, customId, guildId }) {
 	const [userId, challengerId] = message.content.match(/<@(\d+)>/g).map((a) => a.slice(2, -1));

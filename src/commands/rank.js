@@ -4,8 +4,8 @@ import { User } from '../models/User.js';
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('rank')
-		.setDescription('Check user stats')
-		.addMentionableOption((option) => option.setName('user').setDescription('Select a user to check their stats')),
+		.setDescription('Sprawdza statystyki użykownika')
+		.addMentionableOption((option) => option.setName('user').setDescription('Użytkownik do sprawdzenia')),
 	async execute(interaction) {
 		const userId = (interaction.options.getMentionable('user') ?? interaction.member).user.id;
 		const users = await User.find({ guild_id: interaction.guildId });
@@ -13,13 +13,13 @@ export const command = {
 
 		if (users.length === 0) {
 			return interaction.reply({
-				content: `There is no user data available for your guild.`,
+				content: `Brak danych dla twojego serwera`,
 				ephemeral: true,
 			});
 		}
 		if (!user) {
 			return interaction.reply({
-				content: `This user has not played any game yet.`,
+				content: `Ten gracz nie rozegrał żadnej gry`,
 				ephemeral: true,
 			});
 		}

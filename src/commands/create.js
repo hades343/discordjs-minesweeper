@@ -3,44 +3,41 @@ import path from 'path';
 import { SlashCommandBuilder } from 'discord.js';
 import { getChannelById, createThread, getUserData } from '../game/utils/index.js';
 import { Game } from '../game/Game.js';
+import { MAX_ROWS, MAX_COLS, DEFAULT_BOMBS, ACTIVE_TAG_NAME } from '../constants.js';
 
 const GUILD_CHANNEL_MAPPING_FILE = path.resolve(process.cwd(), 'src', 'commands', 'guild_channel_mapping.json');
 const GUILD_CHANNEL_MAPPING = JSON.parse(fs.readFileSync(GUILD_CHANNEL_MAPPING_FILE).toString());
-const MAX_ROWS = 11;
-const MAX_COLS = 11;
-const MAX_BOMBS = MAX_COLS * MAX_ROWS - 1;
-const DEFAULT_BOMBS = 20;
-const ACTIVE_TAG_NAME = 'AKTYWNA';
+const MAX_BOMBS = MAX_ROWS * MAX_COLS - 1;
 
 export const command = {
 	data: new SlashCommandBuilder()
 		.setName('create')
-		.setDescription('Starts a new Minesweeper game')
+		.setDescription('Tworzy nową plansze sapera')
 		.addIntegerOption((option) =>
 			option
 				.setName('rows')
-				.setDescription(`Number of rows for the game board (default: ${MAX_ROWS})`)
+				.setDescription(`Liczba wierszy (default: ${MAX_ROWS})`)
 				.setMinValue(2)
-				.setMaxValue(MAX_ROWS)
+				.setMaxValue(+MAX_ROWS)
 		)
 		.addIntegerOption((option) =>
 			option
 				.setName('cols')
-				.setDescription(`Number of columns for the game board (default: ${MAX_COLS})`)
+				.setDescription(`Liczba kolumn (default: ${MAX_COLS})`)
 				.setMinValue(2)
-				.setMaxValue(MAX_COLS)
+				.setMaxValue(+MAX_COLS)
 		)
 		.addIntegerOption((option) =>
 			option
 				.setName('bombs')
-				.setDescription(`Number of bombs on the game board (default: ${DEFAULT_BOMBS})`)
+				.setDescription(`Liczba bomb (default: ${DEFAULT_BOMBS})`)
 				.setMinValue(1)
 				.setMaxValue(MAX_BOMBS)
 		)
 		.addMentionableOption((option) =>
-			option.setName('challenge').setDescription('Starts a challenge game for the specified user')
+			option.setName('challenge').setDescription('Tworzy wyzwanie dla wskazanego gracza')
 		)
-		.addStringOption((option) => option.setName('seed').setDescription('Starts a game with the given seed')),
+		.addStringOption((option) => option.setName('seed').setDescription('Tworzy gre z wskazanym seedem')),
 	async execute(interaction) {
 		const rows = interaction.options.getInteger('rows') ?? MAX_ROWS;
 		const cols = interaction.options.getInteger('cols') ?? MAX_COLS;
@@ -57,27 +54,27 @@ export const command = {
 
 		if (!GUILD_CHANNEL_MAPPING[interaction.guildId]) {
 			return await interaction.reply({
-				content: 'The forum channel has not been set for your guild.',
+				content: 'Kanał forum nie został ustawiony dla twojego serwera',
 				ephemeral: true,
 			});
 		}
 		if (challenge !== null) {
 			if (challenge.role || challenge.user.bot || challenge.user.system) {
 				return await interaction.reply({
-					content: 'Please mention a valid user for the challenge!',
+					content: 'Podaj właściwego użytkownika',
 					ephemeral: true,
 				});
 			}
 			if (challenge.id === interaction.member.id) {
 				return await interaction.reply({
-					content: "You can't challenge yourself!",
+					content: 'Nie możesz stworzyć wyzwania dla siebie',
 					ephemeral: true,
 				});
 			}
 		}
 		if (bombs > rows * cols - 1) {
 			return await interaction.reply({
-				content: 'The number of bombs exceeds the available cells.',
+				content: `Podałeś za dużo bomb (liczba pól: ${rows * cols}, liczba bomb: ${bombs})`,
 				ephemeral: true,
 			});
 		}
@@ -109,7 +106,7 @@ export const command = {
 		);
 
 		return interaction.reply({
-			content: `Game has been created in ${thread}`,
+			content: `Gra stworzona w ${thread}`,
 			ephemeral: true,
 		});
 	},

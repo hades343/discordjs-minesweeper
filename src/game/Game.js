@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { Tile, TILE_STATES } from './Tile.js';
+import { Tile } from './Tile.js';
 import {
 	generateSeed,
 	getSeededRandomGenerator,
@@ -7,22 +7,7 @@ import {
 	getUserData,
 	getChannelById,
 } from './utils/index.js';
-import { EMOJIS } from './emojis.js';
-
-const GAME_STATES = {
-	WIN: 'win',
-	LOSE: 'lose',
-	ACTIVE: 'active',
-};
-
-const EMBED_COLORS = {
-	BLUE: 0x0099ff,
-	RED: 0xff0000,
-	GREEN: 0x00ff00,
-};
-
-const WIN_TAG_NAME = 'WYGRANA';
-const LOSE_TAG_NAME = 'PRZEGRANA';
+import { EMOJIS, TILE_STATES, GAME_STATES, EMBED_COLORS, WIN_TAG_NAME, LOSE_TAG_NAME } from '../constants.js';
 
 class Game {
 	constructor({ rows, cols, seed, bombs, isRanked, position }) {

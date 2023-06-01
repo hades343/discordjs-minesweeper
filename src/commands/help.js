@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
-import { EMOJIS } from '../game/emojis.js';
+import { EMOJIS } from '../constants.js';
 
 export const command = {
-	data: new SlashCommandBuilder().setName('help').setDescription('Provides a description of game tiles in Minesweeper'),
+	data: new SlashCommandBuilder().setName('help').setDescription('Wyświetla znaczenie wszystkich pól z planszy'),
 	async execute(interaction) {
 		const embed = {
 			content: 'Wyjaśnienie gry',

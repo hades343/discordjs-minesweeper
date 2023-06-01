@@ -1,12 +1,4 @@
-import { EMOJIS } from './emojis.js';
-
-const TILE_STATES = {
-	HIDDEN: 'hidden',
-	BOMB: 'bomb',
-	EXPLODED: 'exploded',
-	REVEALED: 'revealed',
-	MARKED: 'marked',
-};
+import { EMOJIS, TILE_STATES } from '../constants.js';
 
 class Tile {
 	constructor({ x, y, isBomb }) {
@@ -37,4 +29,4 @@ class Tile {
 	}
 }
 
-export { Tile, TILE_STATES };
+export { Tile };
