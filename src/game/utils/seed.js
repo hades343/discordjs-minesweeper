@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { SEED_SECRET } from '../../constants.js';
 
 function generateSeed(seedLength = 16) {
 	const CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -13,6 +14,7 @@ function generateSeed(seedLength = 16) {
 }
 
 function getSeededRandomGenerator(seed) {
+	seed += SEED_SECRET;
 	let seededRandom = 0;
 	for (let i = 0; i < seed.length; i++) {
 		const charCode = seed.charCodeAt(i);
