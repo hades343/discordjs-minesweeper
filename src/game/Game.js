@@ -236,15 +236,25 @@ class Game {
 				if (tile.state === TILE_STATES.MARKED) {
 					marked++;
 				}
-				row.push(
-					this.getCurrentTile() === tile && this.state === GAME_STATES.ACTIVE
-						? tile.state === TILE_STATES.REVEALED
-							? EMOJIS.ORANGE_SQUARE
-							: tile.state === TILE_STATES.MARKED
-							? EMOJIS.RED_SQUARE
-							: EMOJIS.YELLOW_SQUARE
-						: tile.toString()
-				);
+				if ((x === this.position.x || y === this.position.y) && this.state === GAME_STATES.ACTIVE) {
+					row.push(
+						this.getCurrentTile() === tile
+							? tile.state === TILE_STATES.REVEALED
+								? EMOJIS.ORANGE_SQUARE
+								: tile.state === TILE_STATES.MARKED
+								? EMOJIS.RED_SQUARE
+								: EMOJIS.YELLOW_SQUARE
+							: tile.state === TILE_STATES.REVEALED
+							? tile.adjacentBombs !== null
+								? tile.toString()
+								: EMOJIS.PURPLE_SQUARE
+							: tile.state === TILE_STATES.HIDDEN
+							? EMOJIS.GREEN_SQUARE
+							: tile.toString()
+					);
+				} else {
+					row.push(tile.toString());
+				}
 			}
 			row.push(y === this.position.y ? EMOJIS.ARROWS.LEFT : EMOJIS.BLUE_SQUARE);
 			grid.push(row);
@@ -342,7 +352,10 @@ async function handleGameInteraction(interaction) {
 				tile.setState(TILE_STATES.BOMB);
 			} else if (value === 'FLAG' || value === 'RED_SQUARE') {
 				tile.setState(TILE_STATES.MARKED);
-			} else if ((typeof +value === 'number' && !isNaN(+value)) || ['ORANGE_SQUARE', 'WHITE_SQUARE'].includes(value)) {
+			} else if (
+				(typeof +value === 'number' && !isNaN(+value)) ||
+				['ORANGE_SQUARE', 'WHITE_SQUARE', 'PURPLE_SQUARE'].includes(value)
+			) {
 				game.revealTile(tile);
 			}
 		}

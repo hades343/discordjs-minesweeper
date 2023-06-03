@@ -21,6 +21,8 @@ export const EMOJIS = {
 	YELLOW_SQUARE: ':yellow_square:',
 	ORANGE_SQUARE: ':orange_square:',
 	RED_SQUARE: ':red_square:',
+	PURPLE_SQUARE: ':purple_square:',
+	GREEN_SQUARE: ':green_square:',
 	NUMBERS: {
 		1: ':one:',
 		2: ':two:',
