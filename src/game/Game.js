@@ -320,7 +320,7 @@ async function handleGameInteraction(interaction) {
 
 	if (!isOwner) {
 		return await interaction.reply({
-			content: 'You do not have permission to access this board!',
+			content: 'To nie twoja plansza',
 			ephemeral: true,
 		});
 	}

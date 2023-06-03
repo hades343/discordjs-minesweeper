@@ -16,12 +16,11 @@ function getClient(commandsCollection) {
 				if (!command) {
 					return;
 				}
-				return command.execute(interaction);
+				return await command.execute(interaction);
 			} else if (interaction.isButton()) {
-				return handleGameInteraction(interaction);
+				return await handleGameInteraction(interaction);
 			}
 		} catch (error) {
-			console.error(error);
 			if (interaction.replied || interaction.deferred) {
 				return interaction
 					.followUp({
