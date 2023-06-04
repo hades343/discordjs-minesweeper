@@ -27,7 +27,7 @@ export const command = {
 					.setFields(
 						{ name: `Rozegrane gry`, value: `${user.games}` },
 						{ name: `Punkty`, value: `${Math.round(user.score)}` },
-						{ name: `Winrate`, value: `${user.wr.toFixed(2)}` },
+						{ name: `Winrate`, value: `${user.wr.toFixed(2)}%` },
 						{
 							name: `Wygrane`,
 							value: `${user.wins}`,
