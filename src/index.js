@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { registerSlashCommands } from './discord/registerCommands.js';
 import { getClient } from './discord/client.js';
 import { checkKeys } from './utils/checkKeys.js';
-import { CLIENT_ID, TOKEN, DATABASE_URI, SEED_SECRET, REQUIRED_ENV_VARIABLES } from './constants.js';
+import { CLIENT_ID, TOKEN, DATABASE_URI, REQUIRED_ENV_VARIABLES } from './constants.js';
 
 (async () => {
 	try {

@@ -10,7 +10,7 @@ import {
 import { EMOJIS, TILE_STATES, GAME_STATES, EMBED_COLORS, WIN_TAG_NAME, LOSE_TAG_NAME } from '../constants.js';
 
 class Game {
-	constructor({ rows, cols, seed, bombs, isRanked, position }) {
+	constructor({ rows, cols, bombs, seed, isRanked, position }) {
 		this.rows = rows;
 		this.cols = cols;
 		this.seed = seed ?? generateSeed();

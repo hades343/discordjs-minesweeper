@@ -31,8 +31,8 @@ const userSchema = new Schema({
 	},
 });
 
-userSchema.pre('save', async function (next) {
-	if (this.isModified('wins') || this.isModified('loses') || this.isModified('score')) {
+userSchema.pre('save', function (next) {
+	if (this.isModified('wins') || this.isModified('loses') || this.isModified('games')) {
 		const wr = this.wins === 0 ? 0 : (this.wins / this.games) * 100;
 		const completed = this.games - (this.games - this.wins - this.loses);
 
