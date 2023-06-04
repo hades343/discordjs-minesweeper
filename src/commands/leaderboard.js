@@ -18,7 +18,7 @@ export const command = {
 		}
 
 		const embed = {
-			content: 'Ranking graczy sapera',
+			content: `Ranking z <t:${Math.floor(Date.now() / 1000)}:T>`,
 			embeds: topUsers.map((user, i) =>
 				new EmbedBuilder()
 					.setColor(generateHexColor())
