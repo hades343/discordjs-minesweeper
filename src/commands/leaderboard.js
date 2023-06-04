@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { User } from '../models/User.js';
+import { generateHexColor } from '../utils/generateHexColor.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -18,17 +19,33 @@ export const command = {
 
 		const embed = {
 			content: 'Ranking graczy sapera',
-			embeds: [
+			embeds: topUsers.map((user, i) =>
 				new EmbedBuilder()
-					.setColor(0x0099ff)
-					.setTitle(`Lista top 10 graczy`)
-					.setDescription(
-						topUsers
-							.map((user, i) => `${i + 1}. <@${user.user_id}> - ${user.score} punktów (${user.wr}% wr)`)
-							.join('\n')
+					.setColor(generateHexColor())
+					.setTitle(`Pozycja w rankingu #${i + 1}`)
+					.setDescription(`<@${user.user_id}>`)
+					.setFields(
+						{ name: `Rozegrane gry`, value: `${user.games}` },
+						{ name: `Punkty`, value: `${Math.round(user.score)}` },
+						{ name: `Winrate`, value: `${user.wr.toFixed(2)}` },
+						{
+							name: `Wygrane`,
+							value: `${user.wins}`,
+							inline: true,
+						},
+						{
+							name: `Przegrane`,
+							value: `${user.loses}`,
+							inline: true,
+						},
+						{
+							name: `Nieukończone`,
+							value: `${user.games - (user.loses + user.wins)}`,
+							inline: true,
+						}
 					)
-					.setTimestamp(),
-			],
+					.setTimestamp()
+			),
 			ephemeral: true,
 		};
 

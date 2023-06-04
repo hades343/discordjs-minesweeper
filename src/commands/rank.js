@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { User } from '../models/User.js';
+import { generateHexColor } from '../utils/generateHexColor.js';
 
 export const command = {
 	data: new SlashCommandBuilder()
@@ -27,12 +28,32 @@ export const command = {
 		const userStanding = users.sort((a, b) => b.score - a.score).findIndex((user) => user.user_id === userId) + 1;
 
 		const embed = {
-			content: 'Ranga gracza',
+			content: `Dane z <t:${Math.floor(Date.now() / 1000)}:T>`,
 			embeds: [
 				new EmbedBuilder()
-					.setColor(0x0099ff)
-					.setTitle(`Twój wynik`)
-					.setDescription(`${userStanding}. <@${userId}> - ${user.score} punktów (${user.wr}% wr)`)
+					.setColor(generateHexColor())
+					.setTitle(`Pozycja w rankingu #${userStanding}`)
+					.setDescription(`<@${userId}>`)
+					.setFields(
+						{ name: `Rozegrane gry`, value: `${user.games}` },
+						{ name: `Punkty`, value: `${Math.round(user.score)}` },
+						{ name: `Winrate`, value: `${user.wr.toFixed(2)}` },
+						{
+							name: `Wygrane`,
+							value: `${user.wins}`,
+							inline: true,
+						},
+						{
+							name: `Przegrane`,
+							value: `${user.loses}`,
+							inline: true,
+						},
+						{
+							name: `Nieukończone`,
+							value: `${user.games - (user.loses + user.wins)}`,
+							inline: true,
+						}
+					)
 					.setTimestamp(),
 			],
 			ephemeral: true,
