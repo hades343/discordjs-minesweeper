@@ -7,7 +7,15 @@ import {
 	getUserData,
 	getChannelById,
 } from './utils/index.js';
-import { EMOJIS, TILE_STATES, GAME_STATES, EMBED_COLORS, WIN_TAG_NAME, LOSE_TAG_NAME } from '../constants.js';
+import {
+	EMOJIS,
+	TILE_STATES,
+	GAME_STATES,
+	EMBED_COLORS,
+	WIN_TAG_NAME,
+	LOSE_TAG_NAME,
+	SAFE_TILE,
+} from '../constants.js';
 
 class Game {
 	constructor({ rows, cols, bombs, seed, isRanked, position }) {
@@ -46,7 +54,7 @@ class Game {
 			const x = Math.floor(seededRandomGenerator() * this.rows);
 			const y = Math.floor(seededRandomGenerator() * this.cols);
 
-			if (bombs.find((bomb) => bomb.x === x && bomb.y === y)) {
+			if (bombs.find((bomb) => bomb.x === x && bomb.y === y) || (x === SAFE_TILE.x && y === SAFE_TILE.y)) {
 				continue;
 			}
 

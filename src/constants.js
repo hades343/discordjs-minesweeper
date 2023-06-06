@@ -73,3 +73,8 @@ export const REQUIRED_ENV_VARIABLES = [
 	'WIN_TAG_NAME',
 	'LOSE_TAG_NAME',
 ];
+
+export const SAFE_TILE = {
+	x: 0,
+	y: 0,
+};
