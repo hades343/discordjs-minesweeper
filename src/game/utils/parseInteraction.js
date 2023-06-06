@@ -27,18 +27,25 @@ function getGameDataFromEmbed(embed) {
 		x: null,
 		y: null,
 	};
-	const grid = embed.description
-		.split('\n')
-		.slice(1, -1)
+	const rawGrid = embed.description.split('\n');
+	const grid = rawGrid
 		.map((row, i) => {
-			const POSITION_EMOJIS = [EMOJIS.YELLOW_SQUARE, EMOJIS.ORANGE_SQUARE, EMOJIS.RED_SQUARE];
-			const newRow = row.match(/:(\w+):/g).slice(1, -1);
-			if (POSITION_EMOJIS.some((emoji) => newRow.includes(emoji))) {
-				position.y = i;
-				position.x = newRow.findIndex((emoji) => POSITION_EMOJIS.includes(emoji));
+			const POSITION_EMOJIS = [EMOJIS.ARROWS.RIGHT, EMOJIS.ARROWS.LEFT];
+			const newRow = row.match(/:(\w+):/g);
+
+			if (i === 0 || i === rawGrid.length - 1) {
+				const POSITION_EMOJIS = [EMOJIS.ARROWS.DOWN, EMOJIS.ARROWS.UP];
+				const xPos = newRow.slice(1, -1).findIndex((emoji) => POSITION_EMOJIS.includes(emoji));
+				position.x = xPos;
+				return;
 			}
-			return newRow.map((emoji) => getKeyByValue(EMOJIS, emoji));
-		});
+			if (POSITION_EMOJIS.some((emoji) => newRow.includes(emoji))) {
+				position.y = i - 1;
+			}
+
+			return newRow.slice(1, -1).map((emoji) => getKeyByValue(EMOJIS, emoji));
+		})
+		.slice(1, -1);
 
 	return {
 		rows: +x,

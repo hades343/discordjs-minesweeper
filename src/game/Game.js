@@ -248,7 +248,7 @@ class Game {
 					row.push(
 						this.getCurrentTile() === tile
 							? tile.state === TILE_STATES.REVEALED
-								? EMOJIS.ORANGE_SQUARE
+								? tile.toString()
 								: tile.state === TILE_STATES.MARKED
 								? EMOJIS.RED_SQUARE
 								: EMOJIS.YELLOW_SQUARE
@@ -360,10 +360,7 @@ async function handleGameInteraction(interaction) {
 				tile.setState(TILE_STATES.BOMB);
 			} else if (value === 'FLAG' || value === 'RED_SQUARE') {
 				tile.setState(TILE_STATES.MARKED);
-			} else if (
-				(typeof +value === 'number' && !isNaN(+value)) ||
-				['ORANGE_SQUARE', 'WHITE_SQUARE', 'PURPLE_SQUARE'].includes(value)
-			) {
+			} else if ((typeof +value === 'number' && !isNaN(+value)) || ['WHITE_SQUARE', 'PURPLE_SQUARE'].includes(value)) {
 				game.revealTile(tile);
 			}
 		}

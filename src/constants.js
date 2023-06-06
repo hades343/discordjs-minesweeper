@@ -19,7 +19,6 @@ export const EMOJIS = {
 	WHITE_SQUARE: ':white_large_square:',
 	BLACK_SQUARE: ':black_large_square:',
 	YELLOW_SQUARE: ':yellow_square:',
-	ORANGE_SQUARE: ':orange_square:',
 	RED_SQUARE: ':red_square:',
 	PURPLE_SQUARE: ':purple_square:',
 	GREEN_SQUARE: ':green_square:',
@@ -77,4 +76,19 @@ export const REQUIRED_ENV_VARIABLES = [
 export const SAFE_TILE = {
 	x: 0,
 	y: 0,
+};
+
+// prettier-ignore
+export const EMOJIS_MEANING = {
+	[`${EMOJIS.BOMB} ${EMOJIS.BOOM}`]: 'bomba (zależnie od stanu gry)',
+	[`${EMOJIS.FLAG}`]: 'pole oflagowane jako bomba',
+	[`${EMOJIS.BLUE_SQUARE}`]: 'obramowanie planszy',
+	[`${EMOJIS.WHITE_SQUARE}`]: 'puste odkryte pole',
+	[`${EMOJIS.BLACK_SQUARE}`]: 'nieodkryte pole',
+	[`${EMOJIS.YELLOW_SQUARE}`]: 'pozycja gracza (na nieodkrytym polu)',
+	[`${EMOJIS.RED_SQUARE}`]: 'pozycja gracza (na oflagowanym polu)',
+	[`${EMOJIS.NUMBERS[1]}-${EMOJIS.NUMBERS[8]}`]: 'liczba bomb wokół pola',
+	[`${EMOJIS.ARROWS.UP}${EMOJIS.ARROWS.DOWN}${EMOJIS.ARROWS.LEFT}${EMOJIS.ARROWS.RIGHT}`]: 'obramowanie, wskazują na aktualną pozycje',
+	[`${EMOJIS.PURPLE_SQUARE}`]: 'linia pomocnicza (odkryte pole bez bomby)',
+	[`${EMOJIS.GREEN_SQUARE}`]: 'linia pomocnicza (nieodkryte pole)',
 };
