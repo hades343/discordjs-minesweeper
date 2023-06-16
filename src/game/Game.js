@@ -334,10 +334,14 @@ class Game {
 }
 
 async function handleGameInteraction(interaction) {
-	const { userId, guildId, challenger, isOwner, action, gameData } = parseInteraction(interaction);
+	const { userId, guildId, challenger, isOwner, action, gameData, isGameOver } = parseInteraction(interaction);
+
+	if (isGameOver) {
+		return;
+	}
 
 	if (!isOwner) {
-		return await interaction.reply({
+		return interaction.reply({
 			content: 'To nie twoja plansza',
 			ephemeral: true,
 		});

@@ -50,27 +50,27 @@ export const command = {
 			&& challenge === null;
 
 		if (!GUILD_CHANNEL_MAPPING[interaction.guildId]) {
-			return await interaction.reply({
+			return interaction.reply({
 				content: 'Kanał forum nie został ustawiony dla twojego serwera',
 				ephemeral: true,
 			});
 		}
 		if (challenge !== null) {
 			if (challenge.role || challenge.user.bot || challenge.user.system) {
-				return await interaction.reply({
+				return interaction.reply({
 					content: 'Podaj właściwego użytkownika',
 					ephemeral: true,
 				});
 			}
 			if (challenge.id === interaction.member.id) {
-				return await interaction.reply({
+				return interaction.reply({
 					content: 'Nie możesz stworzyć wyzwania dla siebie',
 					ephemeral: true,
 				});
 			}
 		}
 		if (bombs > rows * cols - 1) {
-			return await interaction.reply({
+			return interaction.reply({
 				content: `Podałeś za dużo bomb (liczba pól: ${rows * cols}, liczba bomb: ${bombs})`,
 				ephemeral: true,
 			});

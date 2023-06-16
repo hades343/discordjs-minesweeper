@@ -21,6 +21,7 @@ function getClient(commandsCollection) {
 				return await handleGameInteraction(interaction);
 			}
 		} catch (error) {
+			console.log(error);
 			if (interaction.replied || interaction.deferred) {
 				return interaction
 					.followUp({

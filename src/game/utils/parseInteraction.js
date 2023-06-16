@@ -17,6 +17,7 @@ function parseInteraction({ user, message, customId, guildId }) {
 			y,
 		},
 		gameData,
+		isGameOver: ['przegrana', 'wygrana'].some((a) => message.content.includes(a)),
 	};
 }
 
